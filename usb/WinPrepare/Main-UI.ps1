@@ -1,4 +1,4 @@
-# ============================================================================
+﻿# ============================================================================
 #  WinPrepare - Главное интерактивное UI-приложение
 #  Запускается на рабочем столе от имени Администратора.
 #  Выполняет: Wi-Fi -> Обновления и драйверы -> Ожидание сети -> Ввод в домен.
@@ -22,7 +22,7 @@ try {
 # ============================================================================
 
 $form = New-Object System.Windows.Forms.Form
-$form.Text            = 'WinPrepare — Автоматическая настройка Windows 11'
+$form.Text            = 'WinPrepare - Автоматическая настройка Windows 11'
 $form.Size            = New-Object System.Drawing.Size(700, 560)
 $form.StartPosition   = 'CenterScreen'
 $form.FormBorderStyle = 'FixedDialog'
@@ -161,7 +161,7 @@ function Run-AutomationWorkflow {
     if ($state.phase -eq 'start' -or $state.phase -eq 'wifi') {
         Set-TaskStatus -Title "Шаг 1: Подключение к Wi-Fi сети '$($Config.Ssid)'" `
                        -Detail "Импорт профилей Wi-Fi и ожидание выхода в интернет..." `
-                       -StepHighlight "Шаги: >>> [1] Wi-Fi <<<   -->   [2] Обновления и драйверы   -->   [3] Корпоративная сеть   -->   [4] Домен"
+                       -StepHighlight "Шаги: ==> [1] Wi-Fi <==   -->   [2] Обновления и драйверы   -->   [3] Корпоративная сеть   -->   [4] Домен"
         
         UI-Log "Проверка сетевого подключения..."
 
@@ -205,7 +205,7 @@ function Run-AutomationWorkflow {
     if ($state.phase -eq 'updates') {
         Set-TaskStatus -Title "Шаг 2: Центр обновления Windows и драйверы" `
                        -Detail "Инициализация службы Windows Update..." `
-                       -StepHighlight "Шаги: [1] Wi-Fi   -->   >>> [2] Обновления и драйверы <<<   -->   [3] Корпоративная сеть   -->   [4] Домен"
+                       -StepHighlight "Шаги: [1] Wi-Fi   -->   ==> [2] Обновления и драйверы <==   -->   [3] Корпоративная сеть   -->   [4] Домен"
 
         Ensure-WindowsUpdateServices
         Register-MicrosoftUpdateCatalog
@@ -326,7 +326,7 @@ function Enter-DomainPhaseUI {
 
     Set-TaskStatus -Title "Шаг 3: Требуется подключение к корпоративной сети" `
                    -Detail "Подключите Wi-Fi '$wifiHint' (значок сети в трее) или вставьте сетевой провод.`nИмя ПК: $env:COMPUTERNAME (будет сохранено без изменений)." `
-                   -StepHighlight "Шаги: [1] Wi-Fi   -->   [2] Обновления и драйверы   -->   >>> [3] Корпоративная сеть <<<   -->   [4] Домен"
+                   -StepHighlight "Шаги: [1] Wi-Fi   -->   [2] Обновления и драйверы   -->   ==> [3] Корпоративная сеть <==   -->   [4] Домен"
 
     UI-Log "================================================================"
     UI-Log "Все обновления и драйверы успешно установлены!"
@@ -353,7 +353,7 @@ function Enter-DomainPhaseUI {
             $lblDetail.ForeColor = [System.Drawing.Color]::DarkGreen
             $lblDetail.Text      = "Связь с контроллером домена ($targetHost) установлена!`nИмя компьютера: $env:COMPUTERNAME (сохраняется).`nНажмите кнопку 'Ввести в домен...' ниже."
             $btnAction.Enabled   = $true
-            $lblSteps.Text       = "Шаги: [1] Wi-Fi   -->   [2] Обновления и драйверы   -->   [3] Сеть OK   -->   >>> [4] Ввод в домен <<<"
+            $lblSteps.Text       = "Шаги: [1] Wi-Fi   -->   [2] Обновления и драйверы   -->   [3] Сеть OK   -->   ==> [4] Ввод в домен <=="
             return $true
         } else {
             $lblDetail.ForeColor = [System.Drawing.Color]::DarkRed
@@ -438,7 +438,7 @@ function Enter-DomainPhaseUI {
 
                 [System.Windows.Forms.MessageBox]::Show(
                     "Компьютер '$env:COMPUTERNAME' успешно введён в домен $($Config.Domain)!`n`nСейчас компьютер перезагрузится.",
-                    'WinPrepare — Готово',
+                    'WinPrepare - Готово',
                     [System.Windows.Forms.MessageBoxButtons]::OK,
                     [System.Windows.Forms.MessageBoxIcon]::Information
                 ) | Out-Null
